@@ -13,17 +13,19 @@ Abaixo, o esquema do sistema de distribuição hipotético utilizado nas simula�
 
 O projeto está organizado por objetivos, conforme definido na proposta da disciplina:
 
-Objetivo_1: Análise do sistema original (sem regulação).
-
-Objetivo_2: Regulação Trifásica (Casos 1 e 2).
-
-Objetivo_3: Regulação Monofásica Independente (Casos 1 e 2).
-
-Objetivo_4: Reanálise sob condição de tensão nominal (1.0 pu).
-
-DEE - PBL2 - 2026-1.pdf: Documento de referência do projeto.
-
-Circuito REV1.pdf: Parâmetros e diagrama do circuito estudado.
+├── Objetivo_1/
+├── Objetivo_2/
+│   ├── Caso_1/
+│   └── Caso_2/
+├── Objetivo_3/
+│   ├── Caso_1/
+│   └── Caso_2/
+├── Objetivo_4/
+│   ├── Objetivo_1/
+│   ├── Objetivo_2/
+│   └── Objetivo_3/
+├── DEE - PBL2 - 2026-1.pdf
+└── Circuito REV1.pdf
 
 Dentro de cada pasta ou subpasta de caso, você encontrará a seguinte organização:
 
