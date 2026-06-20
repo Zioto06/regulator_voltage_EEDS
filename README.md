@@ -11,7 +11,7 @@ Abaixo, o esquema do sistema de distribuição hipotético utilizado nas simula�
 
 ## Estrutura do Repositório
 
-O projeto está organizado por objetivos, conforme definido na proposta da disciplina:
+A organização dos arquivos no projeto segue a árvore abaixo:
 
 ├── Objetivo_1/
 ├── Objetivo_2/
