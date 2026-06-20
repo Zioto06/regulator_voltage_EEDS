@@ -13,7 +13,6 @@ Abaixo, o esquema do sistema de distribuição hipotético utilizado nas simula�
 
 O projeto está organizado por objetivos conforme definido na proposta da disciplina:
 
-text
 ├── Objetivo_1/             # Análise do sistema original (sem regulação)
 ├── Objetivo_2/             # Regulação Trifásica (Casos 1 e 2)
 ├── Objetivo_3/             # Regulação Monofásica Independente (Casos 1 e 2)
