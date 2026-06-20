@@ -7,7 +7,7 @@ O objetivo central do projeto foi analisar o impacto de dispositivos de regulaç
 ## Diagrama do Sistema
 Abaixo, o esquema do sistema de distribuição hipotético utilizado nas simulações:
 
-![Diagrama do Sistema](image_862a5f.png.png)
+![Diagrama do Sistema](circuito_dee.png)
 
 ## Estrutura do Repositório
 
