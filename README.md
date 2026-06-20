@@ -28,7 +28,7 @@ A organização dos arquivos no projeto segue a árvore abaixo:
 │   └── Objetivo_3/
 ├── DEE - PBL2 - 2026-1.pdf
 └── Circuito REV1.pdf
-
+'''
 
 
 
