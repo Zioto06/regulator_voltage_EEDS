@@ -1,0 +1,116 @@
+Clear
+
+// Definicao dos Loadshapes
+Redirect 'loadshapes.dss'
+
+// =======================================================================
+// OBJETIVO 4: OPERAÇÃO EM TENSÃO NOMINAL (pu=1.0)
+// Equivalente de Thevenin modificado (sem o incremento de 5%)
+New Circuit.FEEDER phases=3 basekv=13.8 pu=1.0 bus1=P1.1.2.3 frequency=60 mvasc3=100 mvasc1=30 x1r1=1.85 
+// =======================================================================
+
+// Definicao dos cabos
+New Linecode.Cabo40CAA nphases=3 basefreq=60 r1=0.3800 x1=0.3925 units=km normamps=370
+New Linecode.Cabo10CAA nphases=3 basefreq=60 r1=0.7090 x1=0.4186 units=km normamps=240
+New Linecode.Cabo4CA nphases=3 basefreq=60 r1=1.6620 x1=0.4638 units=km normamps=140
+
+// Definicao dos trechos de rede MT
+New Line.P1_P2 phases=3 bus1=P1.1.2.3 bus2=P2.1.2.3 length=3.0 linecode=Cabo40CAA
+
+// =======================================================================
+// REGULADOR DO OBJETIVO 2 - CASO 2 (LDC ATIVO)
+// =======================================================================
+// 1. Definição do Regulador (Modelado como um transformador trifásico)
+New Transformer.RegMT phases=3 windings=2 buses=(P2.1.2.3 P2_REG.1.2.3) conns=(wye wye) kvs=(13.8 13.8) kvas=(3000 3000) XHL=1
+
+// 2. Controle do Regulador (LDC ATIVO para compensar até o Nó P4)
+New RegControl.RegMT transformer=RegMT winding=2 vreg=120 band=2 ptratio=66.39 ctprim=100 R=4.27 X=2.52 tapdelay=30
+// =======================================================================
+
+// A linha P2_P3 agora sai do barramento do regulador (P2_REG) em vez de P2
+New Line.P2_P3 phases=3 bus1=P2_REG.1.2.3 bus2=P3.1.2.3 length=2.0 linecode=Cabo10CAA
+
+New Line.P3_P4 phases=3 bus1=P3.1.2.3 bus2=P4.1.2.3 length=2.0 linecode=Cabo10CAA
+New Line.P2_P5 phases=1 bus1=P2.1 bus2=P5.1 length=8.0 linecode=Cabo10CAA
+
+// Definicao dos trechos de rede BT
+New Line.P7_P10 phases=4 bus1=P7.1.2.3.4 bus2=P10.1.2.3.4 length=0.05 linecode=Cabo4CA
+New Line.P7_P8 phases=4 bus1=P7.1.2.3.4 bus2=P8.1.2.3.4 length=0.05 linecode=Cabo4CA
+New Line.P8_P9 phases=4 bus1=P8.1.2.3.4 bus2=P9.1.2.3.4 length=0.05 linecode=Cabo4CA
+
+// Definicao dos transformadores trifasicos
+New Transformer.TRAFO phases=3 windings=2 buses=(P3.1.2.3  P7.1.2.3.4) Conns=(delta wye)  kvs=(13.8 0.22)  kVas=(75 75) Taps=[1.0  1.0]  
+New Reactor.TRAFO_R phases=1 bus1=P7.4 bus2=P7.0 R=15.0  X=0 basefreq=60
+
+// Definicao dos transformadores monofásicos
+New Transformer.CENTERTAP phases=1 windings=3 buses=[P5.3 P6.1.4 P6.4.2] conns=[Wye Wye Wye] kvs=[7.967 0.12 0.12] taps=[1 1 1] kvas=[10 10 10]  
+New Reactor.CENTERTAP_R phases=1 bus1=P6.4 bus2=P6.0 R=15 X=0 basefreq=60
+
+// Alocacao das cargas de unidades consumidoras MT
+New Load.P2_1_M1 Bus1=P2.1.2.3 phases=3 conn=delta Model=2 kV=13.8 kW=2500 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_MT1 status=variable 
+New Load.P2_1_M2 Bus1=P2.1.2.3 phases=3 conn=delta Model=3 kV=13.8 kW=2500 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_MT1 status=variable 
+New Load.P4_1_M1 Bus1=P4.1.2.3 phases=3 conn=delta Model=2 kV=13.8 kW=1000 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_MT1 status=variable 
+New Load.P4_1_M2 Bus1=P4.1.2.3 phases=3 conn=delta Model=3 kV=13.8 kW=1000 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_MT1 status=variable 
+
+// Alocacao das cargas de unidades consumidoras BT
+New Load.P7_1_M1 Bus1=P7.1.2.3.4 phases=3 conn=delta Model=2 kV=0.22 kW=5.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT3 status=variable 
+New Load.P7_1_M2 Bus1=P7.1.2.3.4 phases=3 conn=delta Model=3 kV=0.22 kW=5.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT3 status=variable 
+New Load.P8_1_M1 Bus1=P8.2.3.4 phases=2 conn=delta Model=2 kV=0.22 kW=2.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P8_1_M2 Bus1=P8.2.3.4 phases=2 conn=delta Model=3 kV=0.22 kW=2.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P8_2_M1 Bus1=P8.2.4 phases=1 conn=wye Model=2 kV=0.127 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT1 status=variable 
+New Load.P8_2_M2 Bus1=P8.2.4 phases=1 conn=wye Model=3 kV=0.127 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT1 status=variable 
+New Load.P9_1_M1 Bus1=P7.2.3.4 phases=2 conn=delta Model=2 kV=0.22 kW=2.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P9_1_M2 Bus1=P7.2.3.4 phases=2 conn=delta Model=3 kV=0.22 kW=2.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P9_2_M1 Bus1=P7.1.2.4 phases=2 conn=delta Model=2 kV=0.22 kW=3.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT1 status=variable 
+New Load.P9_2_M2 Bus1=P7.1.2.4 phases=2 conn=delta Model=3 kV=0.22 kW=3.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT1 status=variable 
+New Load.P10_1_M1 Bus1=P10.1.2.3.4 phases=3 conn=delta Model=2 kV=0.22 kW=6.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT3 status=variable 
+New Load.P10_1_M2 Bus1=P10.1.2.3.4 phases=3 conn=delta Model=3 kV=0.22 kW=6.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT3 status=variable 
+New Load.P10_2_M1 Bus1=P10.1.3.4 phases=2 conn=delta Model=2 kV=0.22 kW=4.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable
+New Load.P10_2_M2 Bus1=P10.1.3.4 phases=2 conn=delta Model=3 kV=0.22 kW=4.0 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable
+
+// Alocacao das cargas de unidades consumidoras BT RURAL
+New Load.P6_1_M1 Bus1=P6.1.2 phases=1 conn=wye Model=2 kV=0.24 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P6_1_M2 Bus1=P6.1.2 phases=1 conn=wye Model=3 kV=0.24 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P6_2_M1 Bus1=P6.1.4 phases=1 conn=wye Model=2 kV=0.12 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P6_2_M2 Bus1=P6.1.4 phases=1 conn=wye Model=3 kV=0.12 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P6_3_M1 Bus1=P6.2.4 phases=1 conn=wye Model=2 kV=0.12 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+New Load.P6_3_M2 Bus1=P6.2.4 phases=1 conn=wye Model=3 kV=0.12 kW=1.5 pf=0.92 Vminpu=0.92 Vmaxpu=1.50 daily=LS_BT2 status=variable 
+
+// Alocacao das cargas de unidades consumidoras BT com GD
+New Load.P9_3 Bus1=P9.1.3.4 phases=2 conn=delta Model=3 kV=0.22 kW=8.0 pf=1.0 Vminpu=0.92 Vmaxpu=1.50 daily=LS_GD2 status=variable
+
+// Alocacao das cargas de IP 
+New Load.P7_IP Bus1=P7.1.2.4 phases=1 conn=delta Model=5 kV=0.220 kW=0.15 pf=1.00 Vminpu=0.92 Vmaxpu=1.50 daily=LS_IP status=variable 
+New Load.P8_IP Bus1=P8.2.3.4 phases=1 conn=delta Model=5 kV=0.220 kW=0.15 pf=1.00 Vminpu=0.92 Vmaxpu=1.50 daily=LS_IP status=variable 
+New Load.P9_IP Bus1=P9.3.1.4 phases=1 conn=delta Model=5 kV=0.220 kW=0.15 pf=1.00 Vminpu=0.92 Vmaxpu=1.50 daily=LS_IP status=variable 
+New Load.P10_IP Bus1=P10.1.2.4 phases=1 conn=delta Model=5 kV=0.220 kW=0.15 pf=1.00 Vminpu=0.92 Vmaxpu=1.50 daily=LS_IP status=variable 
+
+// Monitores
+New Monitor.VP1 element=Line.P1_P2 terminal=1 mode=0
+New Monitor.PP1 element=Line.P1_P2 terminal=1 mode=1 5
+New Monitor.VP2 element=Line.P1_P2 terminal=2 mode=0
+New Monitor.VP3 element=Line.P2_P3 terminal=2 mode=0
+New Monitor.VP4 element=Line.P3_P4 terminal=2 mode=0
+New Monitor.VP5 element=Transformer.CENTERTAP terminal=1 mode=0
+New Monitor.VP6 element=Transformer.CENTERTAP terminal=2 mode=0
+New Monitor.VP7 element=Transformer.TRAFO terminal=2 mode=0
+New Monitor.VP8 element=Line.P7_P8 terminal=2 mode=0
+New Monitor.VP9 element=Line.P8_P9 terminal=2 mode=0
+New Monitor.VP10 element=Line.P7_P10 terminal=2 mode=0
+
+// Monitor para verificar as comutações do tap do regulador
+New Monitor.TapReg element=Transformer.RegMT terminal=2 mode=2
+
+// Medidores de energia
+New energymeter.feedertotal element=Line.P1_P2 terminal=1
+
+Set voltagebases=[13.8 0.220 0.127]
+Calcvoltagebases
+
+Set mode=daily
+Set stepsize=10m 
+Set number=144
+
+Solve
+
+Export monitors all
