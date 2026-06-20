@@ -30,17 +30,13 @@ A organização dos arquivos no projeto segue a árvore abaixo:
 └── Circuito REV1.pdf
 ```
 
-
-
 Dentro de cada pasta ou subpasta de caso, você encontrará a seguinte organização:
 
-Imagens/: Gráficos e perfis de tensão resultantes.
+- **Imagens/**: Gráficos e perfis de tensão resultantes.
+- **\*.csv**: Saídas brutas de simulação geradas pelo OpenDSS.
+- **\*.dss**: Arquivos de modelagem do sistema e definições de carga.
+- **\*.py**: Scripts de processamento de dados e geração de gráficos.
 
-*.csv: Saídas brutas de simulação geradas pelo OpenDSS.
-
-*.dss: Arquivos de modelagem do sistema e definições de carga.
-
-*.py: Scripts de processamento de dados e geração de gráficos.
 Requisitos e Execução
 Ferramentas Utilizadas
 OpenDSS: Para a realização dos fluxos de potência.
