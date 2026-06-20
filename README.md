@@ -71,7 +71,7 @@ drive.mount('/content/drive')
 
 ---
 
-## Contexto do Projeto
+## Contexto do Trabalho
 
 O sistema em estudo representa um alimentador de **13,8 kV** utilizado para avaliar o comportamento de reguladores de tensão em cenários de carga industrial.
 
