@@ -21,6 +21,8 @@ O projeto está organizado por objetivos conforme definido na proposta da discip
 ├── DEE - PBL2 - 2026-1.pdf # Documento de referência do projeto
 └── Circuito REV1.pdf       # Parâmetros e diagrama do circuito estudado
 
+
+
 Dentro de cada pasta (ou subpasta de caso), você encontrará:
 
 Imagens/: Gráficos e perfis de tensão resultantes.
