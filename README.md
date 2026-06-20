@@ -13,6 +13,7 @@ Abaixo, o esquema do sistema de distribuição hipotético utilizado nas simula�
 
 A organização dos arquivos no projeto segue a árvore abaixo:
 
+```text
 ├── Objetivo_1/
 ├── Objetivo_2/
 │   ├── Caso_1/
@@ -26,6 +27,7 @@ A organização dos arquivos no projeto segue a árvore abaixo:
 │   └── Objetivo_3/
 ├── DEE - PBL2 - 2026-1.pdf
 └── Circuito REV1.pdf
+```text
 
 Dentro de cada pasta ou subpasta de caso, você encontrará a seguinte organização:
 
