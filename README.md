@@ -11,17 +11,21 @@ Abaixo, o esquema do sistema de distribuição hipotético utilizado nas simula�
 
 ## Estrutura do Repositório
 
-O projeto está organizado por objetivos conforme definido na proposta da disciplina:
+O projeto está organizado por objetivos, conforme definido na proposta da disciplina:
 
-├── Objetivo_1/             # Análise do sistema original (sem regulação)
-├── Objetivo_2/             # Regulação Trifásica (Casos 1 e 2)
-├── Objetivo_3/             # Regulação Monofásica Independente (Casos 1 e 2)
-├── Objetivo_4/             # Reanálise sob condição de tensão nominal (1.0 pu)
-├── DEE - PBL2 - 2026-1.pdf # Documento de referência do projeto
-└── Circuito REV1.pdf       # Parâmetros e diagrama do circuito estudado
+Objetivo_1: Análise do sistema original (sem regulação).
 
+Objetivo_2: Regulação Trifásica (Casos 1 e 2).
 
-Dentro de cada pasta (ou subpasta de caso), você encontrará:
+Objetivo_3: Regulação Monofásica Independente (Casos 1 e 2).
+
+Objetivo_4: Reanálise sob condição de tensão nominal (1.0 pu).
+
+DEE - PBL2 - 2026-1.pdf: Documento de referência do projeto.
+
+Circuito REV1.pdf: Parâmetros e diagrama do circuito estudado.
+
+Dentro de cada pasta ou subpasta de caso, você encontrará a seguinte organização:
 
 Imagens/: Gráficos e perfis de tensão resultantes.
 
@@ -30,7 +34,6 @@ Imagens/: Gráficos e perfis de tensão resultantes.
 *.dss: Arquivos de modelagem do sistema e definições de carga.
 
 *.py: Scripts de processamento de dados e geração de gráficos.
-
 Requisitos e Execução
 Ferramentas Utilizadas
 OpenDSS: Para a realização dos fluxos de potência.
